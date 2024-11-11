@@ -1,0 +1,160 @@
+/* styles/Home.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+  }
+  
+  .header {
+    width: 250px;
+    width: 100%;
+    padding: 10px;
+    background-color: #002424;
+    color: white;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .mainContent {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .leftSection {
+    flex: 1;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sidebarContent {
+    width: 80%; /* Ajusta el tamaño del contenedor lateral */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .card {
+    background-color: #f8f9fa; /* Color de fondo claro para la tarjeta */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 20px;
+    width: 100%;
+    max-width: 400px; /* Controla el tamaño máximo de la tarjeta */
+    margin: 10px;
+    transition: transform 0.3s ease; /* Efecto de transición para interacción */
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Efecto de ampliación al pasar el ratón sobre la tarjeta */
+  }
+  
+  .cardTitle {
+    font-size: 24px; /* Tamaño de fuente del título */
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #555; /* Color del texto */
+    text-align: center;
+  }
+  
+  .cardText {
+    font-size: 16px; /* Tamaño de fuente del texto */
+    color: #555; /* Color del texto */
+    line-height: 1.5;
+    text-align: center; 
+  }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .button {
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .button:focus {
+    outline: none;
+  }
+  
+  .button svg {
+    font-size: 18px;
+  }
+  
+  .rightSection {
+    flex: 2; /* Reduce el valor de flex para que ocupe menos espacio */
+    max-width: 80%; /* Limita el ancho máximo para que no se expanda demasiado */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px; /* Espacio interno para darle un margen al contenido */
+    box-sizing: border-box; /* Asegura que el padding no expanda el tamaño */
+  }   
+
+  .mainContentArea {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    overflow: hidden; /* Evita el desbordamiento si hay contenido adicional */
+  }
+  
+  .videoElement {
+    width: 70%; /* Ajusta el tamaño al porcentaje que prefieras */
+    height: auto; /* Mantén la proporción del video */
+    object-fit: cover;  /* Hace que el video cubra el área del contenedor sin distorsionarse */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-items: center;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 10px;
+    background-color: #002424;
+    color: white;
+  }
+  
+  .circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #089693;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .circle:hover {
+    transform: scale(1.2);
+    background-color: rgb(3, 216, 212);
+    box-shadow: 0px 4px 10px #1be9e5;
+  }
+  
