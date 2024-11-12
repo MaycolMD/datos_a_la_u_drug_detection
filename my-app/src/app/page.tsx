@@ -4,13 +4,14 @@ import styles from '../app/styles/Home.module.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faCamera, faInfoCircle, faImage} from '@fortawesome/free-solid-svg-icons';
-import { faTelegram } from '@fortawesome/free-brands-svg-icons'; // Cambiar esta importación
+import { faTelegram } from '@fortawesome/free-brands-svg-icons';
 
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
-
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [isVideoPaused, setIsVideoPaused] = useState(false);
 
   useEffect(() => {
     const getCameraStream = async () => {
@@ -28,22 +29,57 @@ export default function Home() {
 
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject as MediaStream; // Hacemos un casting explícito
-        const tracks = stream.getTracks(); // Accedemos a los tracks del stream
-        tracks.forEach((track) => track.stop()); // Detenemos todos los tracks (video/audio)
+        const stream = videoRef.current.srcObject as MediaStream;
+        const tracks = stream.getTracks();
+        tracks.forEach((track) => track.stop());
       }
     };
   }, []);
 
+  useEffect(() => {
+    const captureAndSendImage = () => {
+      if (videoRef.current && !isVideoPaused) {  // Solo captura si no está pausado
+        const canvas = document.createElement('canvas');
+        canvas.width = videoRef.current.videoWidth;
+        canvas.height = videoRef.current.videoHeight;
+        canvas.getContext('2d').drawImage(videoRef.current, 0, 0);
+        const imageData = canvas.toDataURL('image/jpeg');
+  
+        fetch('http://127.0.0.1:5000/detect', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ image: imageData }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.detected) {
+              setImageSrc(data.image);
+              setIsVideoPaused(true);
+            }
+          })
+          .catch((error) => console.error('Error:', error));
+      }
+    };
+
+    const intervalId = setInterval(captureAndSendImage, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [isVideoPaused]);
+
+  const handleContinue = () => {
+    setIsVideoPaused(false);
+    setImageSrc(null);
+  };
+
   return (
     <div className={styles.container}>
-      {/* Header o barra superior */}
       <header className={styles.header}>
-        <Image src="/DRUG.png" alt="Logo" width={250} height={0} /> {/* Tamaño mayor */}
+        <Image src="/DRUG.png" alt="Logo" width={250} height={0} />
       </header>
       
       <main className={styles.mainContent}>
-        {/* Sección izquierda */}
         <section className={styles.leftSection}>
           <div className={styles.sidebarContent}>
             <div className={styles.card}>
@@ -53,12 +89,8 @@ export default function Home() {
                 Una vez reconozca en su campo de visión algún derivado de la droga como  
                 <strong> Marihuana</strong>, <strong>Cocaína</strong> o <strong>Heroína</strong> será notificado.
               </p>
-              {/* Botones con íconos */}
               <div className={styles.buttonContainer} style={{ marginLeft: '20px' }}>
-                <button className={styles.button}>
-                  <FontAwesomeIcon icon={faImage} style={{ width: '30px' }} />
-                </button>
-                <button className={styles.button} style={{ marginRight: '20px' }}>
+                <button className={styles.button} onClick={handleContinue}>
                   <FontAwesomeIcon icon={faTelegram} style={{ width: '30px' }} />
                 </button>
               </div>
@@ -66,21 +98,17 @@ export default function Home() {
           </div>
         </section>
         
-        {/* Sección principal */}
         <section className={styles.rightSection}>
-        <div className={styles.mainContentArea}>
-            {/* Elemento de video para mostrar el stream de la cámara */}
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              className={styles.videoElement}
-            ></video>
+          <div className={styles.videoContainer}>
+            {isVideoPaused ? (
+              <img src={`data:image/jpeg;base64,${imageSrc}`} alt="Frame detectado" className={styles.imageElement} />
+            ) : (
+              <video ref={videoRef} autoPlay muted className={styles.videoElement}></video>
+            )}
           </div>
         </section>
       </main>
 
-      {/* Footer con círculos */}
       <footer className={styles.footer}>
         <div className={styles.circle}>
           <FontAwesomeIcon icon={faChartBar} style={{ color: '#002424', width: '30px', height: '30px' }} />
@@ -92,7 +120,6 @@ export default function Home() {
           <FontAwesomeIcon icon={faInfoCircle} style={{ color: '#002424', width: '30px', height: '30px' }} />
         </div>
       </footer>
-
     </div>
   );
 }
