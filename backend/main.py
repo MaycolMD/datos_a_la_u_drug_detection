@@ -58,7 +58,7 @@ def detect_drugs(image_data):
 
     # Realiza la inferencia en el frame capturado
     result = CLIENT.infer(frame, model_id="drugs_segmentation/1")
-    high_conf_detections = [det for det in result['predictions'] if det['confidence'] >= 0.6]
+    high_conf_detections = [det for det in result['predictions'] if det['confidence'] >= 0.5]
 
     if high_conf_detections:
         for det in high_conf_detections:
@@ -78,7 +78,7 @@ def detect_drugs(image_data):
         _, buffer = cv2.imencode('.jpg', frame)
         image_base64 = base64.b64encode(buffer).decode('utf-8')
 
-        send_telegram_message(image_base64=image_base64, drug_type=clase, confidence=(confianza/100))
+        send_telegram_message(image_base64=image_base64, drug_type=clase, confidence=(confianza))
         return {'detected': True, 'image': image_base64}
     return {'detected': False}
 

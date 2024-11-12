@@ -42,7 +42,7 @@ def data_prediction(input_array: Data):
 
     cod_depto = dict_depto.get(input_array.depto, 0)
 
-    if (input_array.droga =="COCINA"):
+    if (input_array.droga =="COCAINA"):
         cod_droga=1
     elif(input_array.droga =="MARIHUANA"):
         cod_droga=2
