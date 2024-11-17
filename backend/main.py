@@ -7,6 +7,7 @@ import base64
 import requests
 import io
 from datetime import datetime
+import geocoder
 
 app = Flask(__name__)
 CORS(app)
@@ -25,10 +26,15 @@ def send_telegram_message(image_base64=None, drug_type=None, confidence=None):
 
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
+    g = geocoder.ip('me')
+    latitude = g.latlng[0] if g.latlng else "No disponible"
+    longitude = g.latlng[1] if g.latlng else "No disponible"
+
     message = f"¡Alerta! Se ha detectado una posible sustancia.\n"
     message += f"Hora: {current_time}\n"
     message += f"Tipo de Droga: {drug_type}\n" if drug_type else "Tipo de Droga: No disponible\n"
     message += f"Confianza: {confidence * 100:.2f}%\n" if confidence else "Confianza: No disponible\n"
+    message += f"Ubicación:\nLatitud: {latitude}\nLongitud: {longitude}\n"
     
     # Enviar el mensaje de alerta
     requests.post(
