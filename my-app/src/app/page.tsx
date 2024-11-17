@@ -180,7 +180,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <div className={styles.circle} onClick={() => window.location.href = 'https://www.example1.com'}>
+        <div className={styles.circle} onClick={() => window.location.href = 'http://localhost:5002'}>
           <FontAwesomeIcon icon={faChartBar} style={{ color: '#002424', width: '30px', height: '30px' }} />
         </div>
         <div className={styles.circle} onClick={() => window.location.href = 'http://localhost:3000'}>
