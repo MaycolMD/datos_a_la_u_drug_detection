@@ -17,35 +17,46 @@ while cap.isOpened():
         print("Error al capturar el frame.")
         break
 
-    # Realizar la inferencia en el frame capturado
-    result = CLIENT.infer(frame, model_id="drugs_segmentation/1")
+    # Realiza la inferencia en el frame capturado
+    result1 = CLIENT.infer(frame, model_id="drugs_segmentation/1")
 
-    high_conf_detections = [det for det in result['predictions'] if det['confidence'] >= 0.6]
+    # Filtrar las detecciones con alta confianza
+    high_conf_detections_1 = [det for det in result1['predictions'] if ( (det['confidence'] >= 0.5) and (det['class'] not in ('alcohol', 'smoking', 'Shrooms')) ) ]
+
+    # Realiza la inferencia en el frame capturado
+    result2 = CLIENT.infer(frame, model_id="drugs-detection/3")
+
+    # Filtrar las detecciones con alta confianza
+    high_conf_detections_2 = [det for det in result2['predictions'] if ( (det['confidence'] >= 0.5) and (det['class'] not in ('alcohol', 'smoking', 'Shrooms')) ) ]
+
+    # Combinar ambas listas de detecciones de alta confianza (si ambas existen)
+    all_detections = high_conf_detections_1 + high_conf_detections_2 if high_conf_detections_1 and high_conf_detections_2 else high_conf_detections_1 or high_conf_detections_2
 
     # Verificar si hay detecciones de alta confianza en el frame
-    if high_conf_detections:
-        for det in result['predictions']:
-            # Extraer las coordenadas de los límites detectados
-            x = int(det['x'] - det['width'] / 2)
-            y = int(det['y'] - det['height'] / 2)
-            w = int(det['width'])
-            h = int(det['height'])
+    if all_detections:
+        for det in all_detections:
+            if (det['class'] not in ('alcohol', 'smoking', 'Shrooms')):
+                # Extraer las coordenadas de los límites detectados
+                x = int(det['x'] - det['width'] / 2)
+                y = int(det['y'] - det['height'] / 2)
+                w = int(det['width'])
+                h = int(det['height'])
 
-            # Dibujar el rectángulo de la detección en el frame
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                # Dibujar el rectángulo de la detección en el frame
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
-            label = f"{det['class']} ({det['confidence']*100:.1f}%)"
+                label = f"{det['class']} ({det['confidence']*100:.1f}%)"
 
-            xx = int(det['x'])
-            yy = int(det['y'])
-            width = int(det['width'])
-            height = int(det['height'])
+                xx = int(det['x'])
+                yy = int(det['y'])
+                width = int(det['width'])
+                height = int(det['height'])
 
-            top_left = (xx - width // 2, yy - height // 2)
-            bottom_right = (xx + width // 2, yy + height // 2)
+                top_left = (xx - width // 2, yy - height // 2)
+                bottom_right = (xx + width // 2, yy + height // 2)
 
-            cv2.putText(frame, label, (top_left[0], top_left[1] - 10), 
-            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+                cv2.putText(frame, label, (top_left[0], top_left[1] - 10), 
+                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
 
         # Mostrar el frame anotado
         cv2.imshow("Detección en tiempo real", frame)
