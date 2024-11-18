@@ -186,7 +186,7 @@ export default function Home() {
         <div className={styles.circle} onClick={() => window.location.href = 'http://localhost:3000'}>
           <FontAwesomeIcon icon={faCamera} style={{ color: '#002424', width: '30px', height: '30px' }} />
         </div>
-        <div className={styles.circle}>
+        <div className={styles.circle} onClick={() => window.location.href = 'http://localhost:3000/chat'}>
           <FontAwesomeIcon icon={faInfoCircle} style={{ color: '#002424', width: '30px', height: '30px' }} />
         </div>
       </footer>
