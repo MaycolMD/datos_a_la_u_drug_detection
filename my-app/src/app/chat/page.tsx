@@ -156,19 +156,25 @@ export default function Home() {
                         <div className={styles.cardIA}>
                             <h3 className={styles.cardTitle}>Bienvenido a Drug Detector</h3>
                             <p className={styles.cardText}>
-                                ¿Sabías que en Colombia existen varias líneas de atención para personas afectadas por el consumo de sustancias psicoactivas?
-                                <br />
-                                <strong>Línea 106:</strong> Disponible en Bogotá, orienta y acompaña a personas con problemas relacionados con el consumo de drogas. Parte de un esfuerzo institucional para ofrecer ayuda en salud mental y consumo (Fuente: Secretaría Distrital de Salud de Bogotá).
-                                <br />
-                                <strong>Red de Salud Pública:</strong> Implementa rutas de atención en varios departamentos y ciudades del país, que incluyen servicios de rehabilitación, apoyo social y reintegración productiva (Fuente: Ministerio de Salud y Protección Social).
-                                <br />
-                                <strong>Ministerio de Salud y Protección Social:</strong> Ha establecido estrategias para la atención integral del consumo de sustancias psicoactivas a nivel nacional, promoviendo la salud, prevención de riesgos y tratamiento especializado (Fuente: Ministerio de Salud y Protección Social).
+                                Descubre cómo en Colombia existen diversas líneas de apoyo para quienes enfrentan problemas relacionados con el consumo de sustancias psicoactivas:
                             </p>
-                            <div className={styles.buttonContainer} style={{ marginLeft: '20px' }}>
+
+                            <div className={styles.infoCard}>
+                                <h4 className={styles.cardSubtitle}>🟨 Ministerio de Salud y Protección Social</h4>
+                                <p className={styles.cardText}>
+                                    🌍 <strong>Estrategia nacional:</strong>
+
+                                    Atención integral para el consumo de sustancias.
+                                    Prevención de riesgos.
+                                    Tratamiento especializado.
+
+                                    🌐 <strong>Fuente:</strong> Ministerio de Salud y Protección Social
+                                </p>
                             </div>
                         </div>
                     </div>
                 </section>
+
 
                 <section className={styles.rightSection}>
                     <div className={styles.chat}>
