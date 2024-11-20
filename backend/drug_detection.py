@@ -35,7 +35,7 @@ while cap.isOpened():
     # Verificar si hay detecciones de alta confianza en el frame
     if all_detections:
         for det in all_detections:
-            if (det['class'] not in ('alcohol', 'smoking', 'Shrooms')):
+            if ((det['class'] not in ('alcohol', 'smoking', 'Shrooms')) and ( det['confidence']>= 0.5 )):
                 # Extraer las coordenadas de los límites detectados
                 x = int(det['x'] - det['width'] / 2)
                 y = int(det['y'] - det['height'] / 2)
