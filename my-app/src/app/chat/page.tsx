@@ -156,20 +156,25 @@ export default function Home() {
                         <div className={styles.cardIA}>
                             <h3 className={styles.cardTitle}>Bienvenido a Drug Detector</h3>
                             <p className={styles.cardText}>
-                                Descubre cómo en Colombia existen diversas líneas de apoyo para quienes enfrentan problemas relacionados con el consumo de sustancias psicoactivas:
+                                Descubre cómo en Colombia existen entidades de apoyo para quienes enfrentan problemas relacionados con el consumo de sustancias psicoactivas:
                             </p>
 
                             <div className={styles.infoCard}>
                                 <h4 className={styles.cardSubtitle}>🟨 Ministerio de Salud y Protección Social</h4>
-                                <p className={styles.cardText}>
-                                    🌍 <strong>Estrategia nacional:</strong>
+                                <p className={styles.cardText}>🌍 <strong>Estrategia nacional:</strong></p>
 
-                                    Atención integral para el consumo de sustancias.
-                                    Prevención de riesgos.
-                                    Tratamiento especializado.
+                                <p className={styles.cardText}>Entidad reguladora que busca liderar y coordinar las políticas públicas relacionadas con la salud y el bienestar social.</p>
+                                <p className={styles.cardText}>Ofrecen información clara y guiada sobre la prevención de sustancias psicoactivas y los programas de prevención de las mismas.</p>
+                                <p className={styles.cardText}>🌐 <strong>Fuente: </strong> <a href="https://www.minsalud.gov.co/salud/publica/SMental/Paginas/Sustancias-psicoactivas.aspx" target="_blank" rel="noopener noreferrer" className={styles.link}>Ministerio de Salud y Protección Social</a></p>
 
-                                    🌐 <strong>Fuente:</strong> Ministerio de Salud y Protección Social
-                                </p>
+                            </div>
+                            <div className={styles.infoCard}>
+                                <h4 className={styles.cardSubtitle}>📞 Línea 106</h4>
+                                <p className={styles.cardText}>🌍 <strong>El poder de ser escuchado</strong></p>
+
+                                <p className={styles.cardText}>Una línea de ayuda, intervención psicosocial y soporte en crisis no presencial. Que a través de canales de contacto identifica, previene y canaliza hacia servicios expertos eventos de riesgo para la salud mental, como el consumo de sustancias psicoactivas.</p>
+                                <p className={styles.cardText}> 🌐 <strong>Fuente: </strong> <a href="https://bogota.gov.co/servicios/guia-de-tramites-y-servicios/linea-106" target="_blank" rel="noopener noreferrer" className={styles.link}>Línea 106 - Bogotá</a></p>
+
                             </div>
                         </div>
                     </div>
