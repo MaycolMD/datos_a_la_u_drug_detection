@@ -200,13 +200,13 @@ export default function Home() {
               <div className={styles.resultsContainer}>
                 <h3 className={styles.resultsTitle}>Resultados de Predicción</h3>
                 <p className={styles.resultItem}>
-                  <strong>Estimado para el mes actual:</strong> {predictionResults.currentMonth}
+                  <strong>Estimado para el mes actual:</strong> {predictionResults.currentMonth.toFixed(2)}
                 </p>
                 <p className={styles.resultItem}>
-                  <strong>Predicción para el próximo mes:</strong> {predictionResults.nextMonth}
+                  <strong>Predicción para el próximo mes:</strong> {predictionResults.nextMonth.toFixed(2)}
                 </p>
                 <p className={styles.resultItem}>
-                  <strong>Predicción para los próximos dos meses:</strong> {predictionResults.twoMonths}
+                  <strong>Predicción para los próximos dos meses:</strong> {predictionResults.twoMonths.toFixed(2)}
                 </p>
                 <button onClick={() => setPredictionResults(null)} className={styles.resetButton}>
                   Hacer otra predicción

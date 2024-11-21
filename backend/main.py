@@ -63,22 +63,35 @@ def detect_drugs(image_data):
     frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
     # Realiza la inferencia en el frame capturado
-    result = CLIENT.infer(frame, model_id="drugs_segmentation/1")
-    high_conf_detections = [det for det in result['predictions'] if det['confidence'] >= 0.5]
+    # Realiza la inferencia en el frame capturado
+    result1 = CLIENT.infer(frame, model_id="drugs_segmentation/1")
 
-    if high_conf_detections:
-        for det in high_conf_detections:
-            x = int(det['x'] - det['width'] / 2)
-            y = int(det['y'] - det['height'] / 2)
-            w = int(det['width'])
-            h = int(det['height'])
+    # Filtrar las detecciones con alta confianza
+    high_conf_detections_1 = [det for det in result1['predictions'] if ( (det['confidence'] >= 0.6) and (det['class'] not in ('alcohol', 'smoking', 'Shrooms')) ) ]
 
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-            label = f"{det['class']} ({det['confidence']*100:.1f}%)"
-            cv2.putText(frame, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+    # Realiza la inferencia en el frame capturado
+    result2 = CLIENT.infer(frame, model_id="drugs-detection/3")
 
-            clase = det['class']
-            confianza = det['confidence']
+    # Filtrar las detecciones con alta confianza
+    high_conf_detections_2 = [det for det in result2['predictions'] if ( (det['confidence'] >= 0.6) and (det['class'] not in ('alcohol', 'smoking', 'Shrooms')) ) ]
+
+    # Combinar ambas listas de detecciones de alta confianza (si ambas existen)
+    all_detections = high_conf_detections_1 + high_conf_detections_2 if high_conf_detections_1 and high_conf_detections_2 else high_conf_detections_1 or high_conf_detections_2
+
+    if all_detections:
+        for det in all_detections:
+            if ((det['class'] not in ('alcohol', 'smoking', 'Shrooms')) and ( det['confidence']>= 0.6 )):
+                x = int(det['x'] - det['width'] / 2)
+                y = int(det['y'] - det['height'] / 2)
+                w = int(det['width'])
+                h = int(det['height'])
+
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                label = f"{det['class']} ({det['confidence']*100:.1f}%)"
+                cv2.putText(frame, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+
+                clase = det['class']
+                confianza = det['confidence']
 
         # Codifica la imagen de vuelta a base64 para enviarla al frontend
         _, buffer = cv2.imencode('.jpg', frame)

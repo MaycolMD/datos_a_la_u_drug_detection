@@ -13,35 +13,38 @@ export default function Home() {
     const [suggestions, setSuggestions] = useState<string[]>([]);
 
     const questions = [
-        "¿Qué tan extendido está el consumo de heroína en Colombia?",
-        "¿Cuáles son los riesgos a corto y largo plazo del uso de heroína?",
-        "¿Qué diferencia hay entre el consumo de heroína y otras drogas opioides?",
-        "¿Cómo afecta la heroína al sistema nervioso central?",
-        "¿Qué regiones de Colombia registran mayor consumo de heroína?",
-        "¿Qué alternativas de tratamiento existen en Colombia para personas adictas a la heroína?",
-        "¿Cómo identificar una sobredosis de heroína y qué hacer en esos casos?",
-        "¿Qué impacto tiene la heroína en la salud mental de los consumidores?",
-        "¿Qué iniciativas existen en Colombia para prevenir el uso de heroína?",
-        "¿Qué factores han llevado a Colombia a ser uno de los mayores productores de cocaína en el mundo?",
-        "¿Cómo afecta el consumo de cocaína al sistema cardiovascular?",
-        "¿Qué relación hay entre la producción de cocaína y las comunidades rurales colombianas?",
-        "¿Qué formas de consumo de cocaína son más comunes y cómo varían sus efectos?",
-        "¿Cuáles son los impactos sociales y económicos del consumo de cocaína en Colombia?",
-        "¿Qué papel juega Colombia en el tráfico internacional de cocaína?",
-        "¿Qué alternativas legales y comunitarias se han propuesto para combatir la producción de cocaína?",
-        "¿Qué tan adictiva es la cocaína en comparación con otras drogas ilícitas?",
-        "¿Qué avances ha logrado Colombia en la erradicación de cultivos de coca?",
-        "¿Qué diferencia hay entre el uso medicinal y recreativo de la marihuana en Colombia?",
-        "¿Cuáles son los efectos secundarios más comunes del consumo de marihuana?",
-        "¿Cómo está regulado el cultivo de marihuana medicinal en Colombia?",
-        "¿Qué impacto tiene el consumo de marihuana en el rendimiento académico y laboral?",
-        "¿Qué tan accesible es la marihuana para los jóvenes en Colombia?",
-        "¿Qué beneficios y riesgos tiene el uso de marihuana medicinal?",
-        "¿Cómo ha cambiado la percepción social de la marihuana en los últimos años en Colombia?",
-        "¿Qué efectos tiene el consumo crónico de marihuana en la memoria y el aprendizaje?",
-        "¿Qué medidas existen en Colombia para regular el consumo de marihuana en espacios públicos?",
-        "¿Qué líneas de atención hay en Colombia para la ayuda a drogadictos?"
+        "¿Cómo brindar primeros auxilios a alguien que ha consumido heroína o cocaína?",
+        "¿Qué pasos seguir si una persona está bajo los efectos de cocaína y muestra signos de sobredosis?",
+        "¿Cuáles son los síntomas de intoxicación por marihuana y cómo asistir a alguien en esta situación?",
+        "¿Qué hacer si una persona tiene dificultades para respirar después de consumir cocaína?",
+        "¿Cómo reconocer una sobredosis de heroína o cocaína y qué primeros auxilios aplicar?",
+        "¿Qué precauciones debo tomar al acercarme a alguien bajo los efectos de drogas?",
+        "¿Cuáles son los signos de una crisis respiratoria por heroína o cocaína y cómo intervenir?",
+        "¿Qué hacer si alguien convulsiona después de consumir cocaína o heroína?",
+        "¿Cómo actuar en caso de detectar síntomas de sobredosis en las cámaras?",
+        "¿Qué debo hacer si una persona se encuentra muy alterada tras consumir marihuana?",
+        "¿Cuándo es seguro mover a una persona inconsciente por consumo de drogas?",
+        "¿Qué técnicas de reanimación pueden aplicarse en casos de sobredosis de heroína o cocaína?",
+        "¿Cómo manejar una situación en la que alguien tiene náuseas o vómitos tras consumir drogas?",
+        "¿Qué debo hacer si alguien bajo el efecto de drogas se comporta de forma agresiva?",
+        "¿Cuáles son los síntomas de intoxicación grave por cocaína o marihuana y cómo brindar ayuda?",
+        "¿Qué procedimientos de emergencia seguir si alguien muestra signos de sobredosis?",
+        "¿Cómo asegurar la vía aérea de una persona inconsciente por consumo de cocaína o heroína?",
+        "¿Cuáles son los pasos para administrar RCP a alguien que no respira tras una sobredosis?",
+        "¿Qué hacer si alguien pierde el conocimiento después de consumir una droga como heroína o cocaína?",
+        "¿Cómo verificar si alguien necesita atención médica urgente tras el uso de cocaína o marihuana?",
+        "¿Qué hacer si alguien parece paranoico o ansioso extremo después de consumir marihuana?",
+        "¿Qué hacer si una persona experimenta palpitaciones rápidas después de consumir cocaína?",
+        "¿Qué técnicas pueden ayudar a calmar a una persona bajo los efectos de marihuana?",
+        "¿Qué hacer si alguien tiene alucinaciones después de consumir una droga desconocida?",
+        "¿Qué signos indican que una persona debe ser llevada a urgencias inmediatamente tras el uso de drogas?",
+        "¿Qué herramientas de primeros auxilios son útiles en casos de sobredosis de cocaína o heroína?",
+        "¿Cómo evitar que alguien bajo efectos de drogas se ahogue con su propia saliva?",
+        "¿Qué debo hacer si alguien muestra signos de intoxicación por consumir marihuana en exceso?",
+        "¿Qué protocolos de seguridad seguir al atender a alguien bajo influencia de cocaína o heroína?",
+        "¿Qué hacer si una persona presenta signos de sobredosis en un área pública?"
     ];
+    
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const input = event.target.value;
@@ -86,7 +89,7 @@ export default function Home() {
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
         try {
-            const response = await fetch('http://127.0.0.1:5001/ia_response', {
+            const response = await fetch('http://127.0.0.1:5003/ia_response', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
