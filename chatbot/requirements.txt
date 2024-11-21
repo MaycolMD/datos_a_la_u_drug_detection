@@ -1,0 +1,8 @@
+Flask==2.3.3
+Flask-Cors==3.0.10
+requests==2.31.0
+google-generativeai==0.8.3
+fastapi==0.70.0
+fastapi-cli==0.0.4
+pandas==1.5.3
+uvicorn==0.15.0
