@@ -7,48 +7,85 @@ from streamlit.components.v1 import html
 # Configuración de la página
 st.set_page_config(layout="wide")
 # Estilo para la imagen
+import streamlit as st
+
+# Agregar estilos CSS para el encabezado y la imagen
+import streamlit as st
+from PIL import Image
+
+
+import streamlit as st
+import base64
+from PIL import Image
+from io import BytesIO
+
+# Cargar la imagen del logo
+logo = Image.open('DRUG.png')  # Cambia la ruta a donde esté tu logo
+
+# Función para convertir la imagen a base64
+def logo_to_base64(img):
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
+    return img_str
+
+# Convertir la imagen a base64
+logo_base64 = logo_to_base64(logo)
+
+# CSS para la barra de navegación
 st.markdown(
     """
     <style>
-        .stImage > img {
-            display: block;
-            margin: 0 auto;
-            width: 150px;  /* Ajusta el tamaño del logo */
-            border-radius: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+        .streamlit-expanderHeader {
+        display: none;
+    }
+    .css-1a8r6vl {
+        visibility: hidden;
+    }
 
-        .stImage > img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
+    .navbar {
+        background-color: #003d3d;
+        color: white;
+        padding: 5px 0;
+        text-align: center;
+        font-size: 30px;
+        font-family: Arial, sans-serif;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;  /* Asegura que se quede encima de otros elementos */
+    }
+    .navbar-logo {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    .navbar-text {
+        display: inline-block;
+        color: white;
+        font-weight: bold;
+        letter-spacing: 2px;
+        vertical-align: middle;
+    }
+    .navbar-logo-text {
+        color: #00bfbf;
+        font-weight: 600;
+    }
     </style>
-    """, 
+    """,
     unsafe_allow_html=True
 )
-
-# Mostrar la imagen del logo usando st.image
-st.image('DRUG.png',  use_container_width=False, width=200)
+# Contenido de la barra con la imagen como logo
 st.markdown(
-    """
-    
-    <style>
-        .header {
-            background-color: #002424;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-        }
-    </style>
-    <div class="header"> Incautación de Drogas en Colombia</div>
-    """, 
+    f"""
+    <div class="navbar">
+        <span class="navbar-logo"><img src="data:image/png;base64,{logo_base64}" width="250" height="100"></span>
+    </div>
+    """,
     unsafe_allow_html=True
 )
+
 
 st.divider()
 
@@ -199,7 +236,15 @@ with col[0]:
     st.markdown("##### Distribución de incautación de drogas en Colombia (kg)")
     st.plotly_chart(fig_pie, use_container_width=True)
 with col[1]:
-    st.markdown(f"##### Incautación de :green[**{droga_seleccionada}**] en Colombia por departamento")
+    st.markdown(
+    f"""
+    <div style="text-align: center;">
+        <h5>Incautación de <span style="color: green; font-weight: bold;">{droga_seleccionada}</span> en Colombia por departamento</h5>
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
+
     st.plotly_chart(fig, use_container_width=True)
     if droga_seleccionada == 'HEROINA':
         
@@ -308,14 +353,13 @@ st.markdown(
     """, 
     unsafe_allow_html=True
 )
-
-# Estilos y botones
 st.markdown(
     """
     <style>
+        /* Estilos para los iconos de acción */
         .icon-button {
-            width: 50px;
-            height: 50px;
+            width: 70px;  /* Tamaño de ancho ajustado */
+            height: 70px; /* Tamaño de alto ajustado */
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -328,23 +372,39 @@ st.markdown(
             background-color: rgb(3, 216, 212);
             box-shadow: 0px 4px 10px #1be9e5;
         }
+
+        /* Fijar la barra en la parte inferior */
+        .static-footer {
+            background-color: #002424;
+             justify-content: space-around;
+            padding: 10px;
+            border-radius: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.4);
+        }
+        .static-footer .icon-button {
+            margin: 0 10px;
+        }
     </style>
 
-    <div style="background-color: #002424; padding: 20px; border-radius: 10px; margin-top: 20px;">
+    <div class="static-footer">
         <div style="display: flex; justify-content: space-around; gap: 20px;">
             <a href="http://localhost:5002" target="_blank" style="text-decoration: none;">
                 <div class="icon-button">
-                    <i class="fa-solid fa-chart-bar" style="color: #002424; font-size: 24px;"></i>
+                    <i class="fa-solid fa-chart-bar" style="color: #002424; font-size: 30px;"></i> <!-- Tamaño del ícono ajustado -->
                 </div>
             </a>
             <a href="http://localhost:3000" target="_blank" style="text-decoration: none;">
                 <div class="icon-button">
-                    <i class="fa fa-camera" style="color: #002424; font-size: 24px;"></i>
+                    <i class="fa fa-camera" style="color: #002424; font-size: 30px;"></i> <!-- Tamaño del ícono ajustado -->
                 </div>
             </a>
             <a href="https://youtube.com" target="_blank" style="text-decoration: none;">
                 <div class="icon-button">
-                    <i class="fa-solid fa-circle-info" style="color: #002424; font-size: 24px;"></i>
+                    <i class="fa-solid fa-circle-info" style="color: #002424; font-size: 30px;"></i> <!-- Tamaño del ícono ajustado -->
                 </div>
             </a>
         </div>
@@ -352,7 +412,7 @@ st.markdown(
     """, 
     unsafe_allow_html=True
 )
-    
+
 st.markdown(
     """
     <style>
