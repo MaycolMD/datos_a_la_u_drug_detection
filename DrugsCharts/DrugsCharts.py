@@ -19,6 +19,18 @@ import base64
 from PIL import Image
 from io import BytesIO
 
+# Cambiar el fondo de la aplicación
+st.markdown(
+    """
+    <style>
+    /* Cambiar el fondo principal de la app */
+    .stApp {
+        background-color: #E0E0E0;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 # Cargar la imagen del logo
 logo = Image.open('DRUG.png')  # Cambia la ruta a donde esté tu logo
 
@@ -79,6 +91,16 @@ st.markdown(
 # Contenido de la barra con la imagen como logo
 st.markdown(
     f"""
+    <style>
+        .navbar {{
+            margin-top: 60px;  /* Ajusta el margen superior aquí */
+        }}
+        .navbar-logo img {{
+            width: 250px;
+            height: 100px;
+        }}
+    </style>
+
     <div class="navbar">
         <span class="navbar-logo"><img src="data:image/png;base64,{logo_base64}" width="250" height="100"></span>
     </div>
@@ -181,7 +203,7 @@ df_filtrado = df_pivot[['DEPARTAMENTO', droga_seleccionada]].rename(columns={dro
 departamentos_data = gpd.read_file('./geoData/colombia.geojson')
 
 # Paleta de colores personalizada
-custom_colors = ["#1E5631", "#A4DE02", "#76BA1B", "#4C9A2A", "#ACDF87"]
+custom_colors = ["#002B2B", "#004F4F", "#007373", "#00A5A5", "#33CCCC"]
 
 #-----------------------CHARTS-----------------------#
 # Donut chart
@@ -197,7 +219,10 @@ fig_pie = px.pie(
 fig_pie.update_layout(
                     height=350,
                     margin_l=20,
-                    legend_orientation="h"
+                    legend_orientation="h",
+                    paper_bgcolor="#E0E0E0",  # Fondo de toda la figura
+                    plot_bgcolor="#E0E0E0"    # Fondo del área de la gráfic
+                    
                     )
 
 
@@ -223,10 +248,9 @@ fig.update_geos(fitbounds="locations",
                 )
 
 fig.update_layout(
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='rgba(0,0,0,0)',
     margin={"r": 0, "t": 0, "l": 0, "b": 0},
-    
+    paper_bgcolor="#E0E0E0",  # Fondo de toda la figura
+    plot_bgcolor="#E0E0E0"    # Fondo del área de la gráfic
 )
 
 
@@ -239,7 +263,7 @@ with col[1]:
     st.markdown(
     f"""
     <div style="text-align: center;">
-        <h5>Incautación de <span style="color: green; font-weight: bold;">{droga_seleccionada}</span> en Colombia por departamento</h5>
+        <h5>Incautación de <span style="color: blue; font-weight: bold;">{droga_seleccionada}</span> en Colombia por departamento</h5>
     </div>
     """, 
     unsafe_allow_html=True
@@ -254,15 +278,15 @@ with col[1]:
             y='CANTIDAD',
             color='DROGA',
             labels={'MES': 'Fecha', 'CANTIDAD': 'Cantidad (kg)'},
-            color_discrete_sequence=["#FFFFFF"])
+            color_discrete_sequence=["#000000"])
         fig_timeline.update_traces(line=dict(width=2))  # Ajusta el grosor de las líneas
         fig_timeline.update_layout(
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor="#E0E0E0",  # Fondo de toda la figura
+            plot_bgcolor="#E0E0E0",  # Fondo del área de la gráfic
             margin={"r": 0, "t": 70, "l": 0, "b": 0},
             height=400)
         st.plotly_chart(fig_timeline, use_container_width=True)
-        st.markdown("##### Incautación de :green[**HEROINA**] en Colombia en el tiempo")
+        st.markdown("##### Incautación de :blue[**HEROINA**] en Colombia en el tiempo")
     else:
        
         fig_timeline = px.line(
@@ -276,17 +300,17 @@ with col[1]:
         )
         fig_timeline.update_traces(line=dict(width=2))  # Ajusta el grosor de las líneas
         fig_timeline.update_layout(
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor="#E0E0E0",  # Fondo de toda la figura
+            plot_bgcolor="#E0E0E0",    # Fondo del área de la gráfic
             margin={"r": 0, "t": 70, "l": 0, "b": 0},
             height=400,
         )  
         
         st.plotly_chart(fig_timeline, use_container_width=True)
-        st.markdown("##### Incautación de :green[**COCAINA**] Y :green[**MARIHUANA**] en Colombia ")
+        st.markdown("##### Incautación de :blue[**COCAINA**] Y :blue[**MARIHUANA**] en Colombia ")
     # Pie de página
 with col[2]:
-    st.markdown(f"##### Top 10 departamentos con mayor incautación de :green[**{droga_seleccionada}**] ")
+    st.markdown(f"##### Top 10 departamentos con mayor incautación de :blue[**{droga_seleccionada}**] ")
     if droga_seleccionada == 'COCAINA':
         st.dataframe(top_cocaina,
                  column_order=("DEPARTAMENTO","COCAINA"),
@@ -338,9 +362,9 @@ with col[2]:
     st.divider()
     with st.expander('Acerca de', expanded=True):
         st.write('''
-            - :green[**Datos**]: [datos.gov.co](<https://datos.gov.co/>).
-            - :green[**Tipo de datos**]: Para la tabla del top 10, los valores estan expresados en kilogramos.
-            - :green[**Interactividad**]: Todos los graficos son interactivos, puedes hacer zoom, descargar la grafica, etc.
+            - :blue[**Datos**]: [datos.gov.co](<https://datos.gov.co/>).
+            - :blue[**Tipo de datos**]: Para la tabla del top 10, los valores estan expresados en kilogramos.
+            - :blue[**Interactividad**]: Todos los graficos son interactivos, puedes hacer zoom, descargar la grafica, etc.
             ''')
 
 st.divider()
