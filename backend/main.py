@@ -15,7 +15,7 @@ CORS(app)
 # Inicializa el cliente de inferencia
 CLIENT = InferenceHTTPClient(
     api_url="https://outline.roboflow.com",
-    api_key="Glwg3WRKqF07dJBzArAn"
+    api_key="aWFlPGW3RwSTVX7YcODy" #Glwg3WRKqF07dJBzArAn
 )
 
 
@@ -67,20 +67,20 @@ def detect_drugs(image_data):
     result1 = CLIENT.infer(frame, model_id="drugs_segmentation/1")
 
     # Filtrar las detecciones con alta confianza
-    high_conf_detections_1 = [det for det in result1['predictions'] if ( (det['confidence'] >= 0.3) and (det['class'] not in ('alcohol', 'smoking', 'Shrooms')) ) ]
+    high_conf_detections_1 = [det for det in result1['predictions'] if ( (det['confidence'] >= 0.6) and (det['class'] not in ('alcohol', 'smoking', 'Shrooms')) ) ]
 
     # Realiza la inferencia en el frame capturado
     result2 = CLIENT.infer(frame, model_id="drugs-detection/3")
 
     # Filtrar las detecciones con alta confianza
-    high_conf_detections_2 = [det for det in result2['predictions'] if ( (det['confidence'] >= 0.5) and (det['class'] not in ('alcohol', 'smoking', 'Shrooms')) ) ]
+    high_conf_detections_2 = [det for det in result2['predictions'] if ( (det['confidence'] >= 0.6) and (det['class'] not in ('alcohol', 'smoking', 'Shrooms')) ) ]
 
     # Combinar ambas listas de detecciones de alta confianza (si ambas existen)
     all_detections = high_conf_detections_1 + high_conf_detections_2 if high_conf_detections_1 and high_conf_detections_2 else high_conf_detections_1 or high_conf_detections_2
 
     if all_detections:
         for det in all_detections:
-            if ((det['class'] not in ('alcohol', 'smoking', 'Shrooms')) and ( det['confidence']>= 0.5 )):
+            if ((det['class'] not in ('alcohol', 'smoking', 'Shrooms')) and ( det['confidence']>= 0.6 )):
                 x = int(det['x'] - det['width'] / 2)
                 y = int(det['y'] - det['height'] / 2)
                 w = int(det['width'])
